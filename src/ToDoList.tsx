@@ -1,5 +1,6 @@
 import React, {ChangeEvent,KeyboardEvent, useState} from 'react';
 import {FilterType} from './App';
+import {AddItemForTodoList} from './AddItemForTodoList';
 
 type PropsType={
     id:string
@@ -18,22 +19,11 @@ type PropsType={
     isDone:boolean
 }
 export const ToDoList=(props:PropsType)=>{
-    let [title,setTitle]=useState('');
 
-    let [error,setError]=useState<string|null>(null);
-
-    let addTask=()=>{
-        if(title.trim()!==''){
-            props.addTask(title.trim(),props.id);
-            setTitle('')
-        }else {
-            setError('No title');
-        }
-
+    let addTask=(title:string)=>{
+        props.addTask(props.title,props.id)
     }
 
-    let onChangeHandler=(e:ChangeEvent<HTMLInputElement>)=>{setError(null); setTitle(e.currentTarget.value)};
-    let onKeyPressHandler=(e:KeyboardEvent<HTMLInputElement>)=>{if(e.charCode===13){addTask();}};
     let onChangeStatus= (t: TaskType, e:ChangeEvent<HTMLInputElement>) => {
         let newStatus=e.currentTarget.checked;
         props.changeTaskStatus(t.id,newStatus,props.id);
@@ -45,12 +35,7 @@ export const ToDoList=(props:PropsType)=>{
     return(
         <div>
             <div>{props.title}<button onClick={removeTodoList}>x</button></div>
-            <div>
-                <input  className={error?'error':''} value={title} onChange={onChangeHandler}
-                onKeyPress={onKeyPressHandler}/>
-                <button onClick={addTask}>+</button>
-                {error&&<div className={'error-message'}>{error}</div> }
-            </div>
+            <AddItemForTodoList   addItem={addTask} />
             <ul>
                 {
                     props.tasks.map(t=><li className={t.isDone?'is-Done':''} key={t.id}><input onChange={(e) => onChangeStatus(t, e)} type="checkbox" checked={t.isDone}/><span>{t.title}</span>
@@ -64,3 +49,4 @@ export const ToDoList=(props:PropsType)=>{
         </div>
     )
 }
+
