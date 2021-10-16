@@ -2,6 +2,8 @@ import React, {ChangeEvent,KeyboardEvent, useState} from 'react';
 import {FilterType} from './App';
 import {AddItemForTodoList} from './AddItemForTodoList';
 import {EditableSpan} from './EditableSpan';
+import {Button, Checkbox, IconButton} from '@material-ui/core';
+import {Delete} from '@material-ui/icons';
 
 type PropsType={
     id:string
@@ -48,18 +50,18 @@ export const ToDoList=(props:PropsType)=>{
 
     return(
         <div>
-            <div><EditableSpan title={props.title} onChange={ changeToDoListTitle}/><button onClick={removeTodoList}>x</button></div>
+            <div><EditableSpan title={props.title} onChange={ changeToDoListTitle}/> <IconButton onClick={removeTodoList}><Delete/></IconButton></div>
             <AddItemForTodoList   addItem={addTask} />
-            <ul>
+            <div>
                 {
-                    props.tasks.map(t=><li className={t.isDone?'is-Done':''} key={t.id}><input onChange={(e) => onChangeStatus(t, e)} type="checkbox" checked={t.isDone}/>
+                    props.tasks.map(t=><div className={t.isDone?'is-Done':''} key={t.id}><Checkbox onChange={(e) => onChangeStatus(t, e)} color={'primary'} checked={t.isDone}/>
                         <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
-                    <button onClick={()=>{props.removeTask(t.id, props.id)}}>x</button></li>)
+                    <IconButton onClick={()=>{props.removeTask(t.id, props.id)}}><Delete/></IconButton></div>)
                 }
-            </ul>
-            <button className={props.filter==='all'?'is-active':''} onClick={()=>{props.changeFilter('all',props.id )}}>All</button>
-            <button  className={props.filter==='active'?'is-active':''} onClick={()=>{props.changeFilter('active',props.id)}}>Active</button>
-            <button  className={props.filter==='completed'?'is-active':''} onClick={()=>{props.changeFilter('completed',props.id)}}>Completed</button>
+            </div>
+            <Button color={'inherit'} variant={props.filter==='all'?'outlined':'text'} onClick={()=>{props.changeFilter('all',props.id )}}>All</Button>
+            <Button  color={'primary'} variant={props.filter==='active'?'outlined':'text'} onClick={()=>{props.changeFilter('active',props.id)}}>Active</Button>
+            <Button  color={'secondary'} variant={props.filter==='completed'?'outlined':'text'} onClick={()=>{props.changeFilter('completed',props.id)}}>Completed</Button>
 
         </div>
     )
