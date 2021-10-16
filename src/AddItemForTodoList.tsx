@@ -1,4 +1,6 @@
+import {Button, IconButton, TextField} from '@material-ui/core';
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {AddBox} from '@material-ui/icons';
 
 type AddItemForTodoListPropsType={
     addItem:(title:string)=>void
@@ -19,9 +21,13 @@ export function AddItemForTodoList(props:AddItemForTodoListPropsType){
     }
 
     return<div>
-        <input  className={error?'error':''} value={title} onChange={onChangeHandler}
-                onKeyPress={onKeyPressHandler}/>
-        <button onClick={addTask}>+</button>
-        {error&&<div className={'error-message'}>{error}</div> }
+        <TextField variant={'outlined'}
+            error={!!error} value={title}
+                   onChange={onChangeHandler}
+                onKeyPress={onKeyPressHandler}
+        label={"Title"}
+        helperText={error}/>
+        <IconButton    color={'primary'} onClick={addTask}><AddBox/></IconButton>
+
     </div>
 }
