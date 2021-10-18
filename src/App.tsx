@@ -91,7 +91,7 @@ function App() {
     }
 
     function changeTodoListTitle(id: string, title: string) {
-        const todoList = todoLists.find(t => t.id != id)
+        const todoList = todoLists.find(t => t.id === id)
         if (todoList) {
             todoList.title = title
             setTodoLists([...todoLists])
