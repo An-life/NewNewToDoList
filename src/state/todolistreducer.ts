@@ -2,11 +2,12 @@ import {FilterType, TaskType, TodoType} from '../App';
 import {v1} from 'uuid';
 
 type ActionType = AddTodolistType|RemoveTodolistType|ChangeTitleTodolistType|ChangeFilterTodolistType
-type  AddTodolistType = {
+export type  AddTodolistType = {
     type: 'ADD-TODOLIST'
     title: string
+    todolistId:string
 }
-type RemoveTodolistType={
+ export type RemoveTodolistType={
     type: 'REMOVE-TODOLIST'
     id: string
 }
@@ -23,7 +24,7 @@ type  ChangeFilterTodolistType={
 export const todolistReducer=(state: Array<TodoType>, action: ActionType): Array<TodoType> => {
     switch (action.type) {
         case 'ADD-TODOLIST':
-        {let todoList: TodoType = {id: v1(), title: action.title, filter: 'all'};
+        {let todoList: TodoType = {id: action.todolistId, title: action.title, filter: 'all'};
             return [...state, todoList]}
         case 'REMOVE-TODOLIST':{
             let rightTodoLists = state.filter(t => t.id != action.id)
@@ -45,15 +46,15 @@ export const todolistReducer=(state: Array<TodoType>, action: ActionType): Array
             return state;
     }
 }
-export const AddTodolistAC= (title: string): AddTodolistType => {
-    return {type: 'ADD-TODOLIST' as const, title: title}
+export const addTodolistAC= (title: string): AddTodolistType => {
+    return {type: 'ADD-TODOLIST' as const, title: title,todolistId:v1()}
 }
-export const RemoveTodolistAC= (id: string): RemoveTodolistType => {
+export const removeTodolistAC= (id: string): RemoveTodolistType => {
     return {type: 'REMOVE-TODOLIST' as const, id:id}
 }
-export const ChangeTitleTodolistAC=(newTitle:string,id:string):ChangeTitleTodolistType=>{
+export const changeTitleTodolistAC=(newTitle:string,id:string):ChangeTitleTodolistType=>{
     return {type: 'CHANGE-TODOLIST-TITLE' as const,title:newTitle, id:id}
 }
-export const ChangeFilterTodolistAC=(filter:FilterType,id:string):ChangeFilterTodolistType=>{
+export const changeFilterTodolistAC=(filter:FilterType,id:string):ChangeFilterTodolistType=>{
     return {type: 'CHANGE-TODOLIST-FILTER' as const,filter:filter, id:id}
 }
