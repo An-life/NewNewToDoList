@@ -12,7 +12,7 @@ export type TodoType = {
     title: string
     filter: FilterType
 }
-type TasksType = {
+ export type TasksType = {
     [key: string]: Array<TaskType>
 }
  export type TaskType = {
