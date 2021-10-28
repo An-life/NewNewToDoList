@@ -34,7 +34,7 @@ function AppWithUseReducer() {
     let todoListId1 = v1();
     let todoListId2 = v1();
 
-    let [tasksObj, dispatchToTodolist] = useReducer(taskReducer,{
+    let [tasksObj,dispatchToTask ] = useReducer(taskReducer,{
         [todoListId1]: [{id: v1(), title: 'HTML', isDone: true},
             {id: v1(), title: 'CSS', isDone: false},
             {id: v1(), title: 'React', isDone: false}],
@@ -43,20 +43,22 @@ function AppWithUseReducer() {
             {id: v1(), title: 'React', isDone: false}]
     });
 
-    let [todoLists, dispatchToTask] = useReducer(todolistReducer,
+    let [todoLists, dispatchToTodolist] = useReducer(todolistReducer,
         [{id: todoListId1, title: 'What to bye', filter: 'all'},
             {id: todoListId2, title: 'What to read', filter: 'all'}])
 
 
 //удаление таски
     function removeTask(id: string, todoListId: string) {
+
         let action=removeTaskAC (id,todoListId);
         dispatchToTask(action);
     }
 
 //добавление таски
-    function addTask(title: string, todoListId: string) {
-        let action=addTaskAC (title, todoListId);
+    function addTask(title: string, todoListId: string){
+    debugger
+        let action=addTaskAC(title, todoListId);
         dispatchToTask(action);
     }
 

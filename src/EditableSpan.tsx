@@ -7,7 +7,7 @@ type EditableSpanType={
 }
 export let EditableSpan=(props:EditableSpanType)=>{
     let [editMode,setEditMode]=useState(false);
-    let [title,setTitle]=useState('');
+    let [title,setTitle]=useState(props.title);
     let activateEditMode=()=>{setEditMode(true);
         setTitle(props.title)}
     let activateViewMode=()=>{setEditMode(false);
@@ -16,6 +16,6 @@ export let EditableSpan=(props:EditableSpanType)=>{
 
 
     return editMode?<TextField variant={'outlined'} value={title} onChange={onChangeHandler} onBlur={activateViewMode} autoFocus />:
-    <span onDoubleClick={activateEditMode}>{props.title}</span>
+    <span onDoubleClick={activateEditMode}>{title}</span>
 
 }
