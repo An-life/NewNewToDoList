@@ -29,7 +29,7 @@ type PropsType={
 export const ToDoList=(props:PropsType)=>{
 
     let addTask=(title:string)=>{
-        props.addTask(props.title,props.id)
+        props.addTask(title,props.id)
     }
 
     let onChangeStatus= (t: TaskType, e:ChangeEvent<HTMLInputElement>) => {
@@ -41,12 +41,10 @@ export const ToDoList=(props:PropsType)=>{
         props.removeTodoList(props.id);
     }
     let changeToDoListTitle=(title:string)=>{
-        props.changeTodoListTitle(props.id,title);
+        props.changeTodoListTitle(title,props.id);
 
     }
-    let onChangeTitleHandler= (title:string) => {
-        props.changeTaskTitle(props.id,title,props.id);
-    }
+
 
     return(
         <div>
@@ -54,9 +52,13 @@ export const ToDoList=(props:PropsType)=>{
             <AddItemForTodoList   addItem={addTask} />
             <div>
                 {
-                    props.tasks.map(t=><div className={t.isDone?'is-Done':''} key={t.id}><Checkbox onChange={(e) => onChangeStatus(t, e)} color={'primary'} checked={t.isDone}/>
+                    props.tasks.map(t=>{
+                        let onChangeTitleHandler= (title:string) => {
+                            props.changeTaskTitle(t.id,title,props.id);
+                        }
+                        return <div className={t.isDone?'is-Done':''} key={t.id}><Checkbox onChange={(e) => onChangeStatus(t, e)} color={'primary'} checked={t.isDone}/>
                         <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
-                    <IconButton onClick={()=>{props.removeTask(t.id, props.id)}}><Delete/></IconButton></div>)
+                    <IconButton onClick={()=>{props.removeTask(t.id, props.id)}}><Delete/></IconButton></div>})
                 }
             </div>
             <Button color={'inherit'} variant={props.filter==='all'?'outlined':'text'} onClick={()=>{props.changeFilter('all',props.id )}}>All</Button>

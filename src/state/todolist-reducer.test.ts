@@ -18,8 +18,8 @@ test('new todolist should be add',()=>{
      ]
      const endState=todolistReducer(startState,addTodolistAC(newTitle))
      expect(endState.length).toBe(3);
-     expect(endState[2].title).toBe(newTitle);
-     expect(endState[2].filter).toBe('all')
+     expect(endState[0].title).toBe(newTitle);
+     expect(endState[0].filter).toBe('all')
  })
 test(' todolist should be removed',()=>{
     let todolistId1=v1();

@@ -11,6 +11,7 @@ export function AddItemForTodoList(props:AddItemForTodoListPropsType){
     let onChangeHandler=(e:ChangeEvent<HTMLInputElement>)=>{setError(null); setTitle(e.currentTarget.value)};
     let onKeyPressHandler=(e:KeyboardEvent<HTMLInputElement>)=>{if(e.charCode===13){addTask();}};
     let addTask=()=>{
+        console.log(title);
         if(title.trim()!==''){
             props.addItem(title.trim());
             setTitle('')
