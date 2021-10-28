@@ -3,6 +3,7 @@ import {v1} from 'uuid';
 import {ActionType} from './task-reducer';
 
 
+
 export type  AddTodolistType = {
     type: 'ADD-TODOLIST'
     title: string
@@ -22,7 +23,14 @@ export type  ChangeFilterTodolistType={
     filter:FilterType
     id: string
 }
-export const todolistReducer=(state: Array<TodoType>, action: ActionType): Array<TodoType> => {
+
+export let todoListId1 = v1();
+export let todoListId2 = v1();
+
+let initialState:Array<TodoType>=[{id: todoListId1, title: 'What to bye', filter: 'all'},
+    {id: todoListId2, title: 'What to read', filter: 'all'}]
+
+export const todolistReducer=(state: Array<TodoType>=initialState, action: ActionType): Array<TodoType> => {
     switch (action.type) {
         case 'ADD-TODOLIST':
         {let todoList: TodoType = {id: action.todolistId, title: action.title, filter: 'all'};

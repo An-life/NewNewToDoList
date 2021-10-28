@@ -4,7 +4,7 @@ import {
     AddTodolistType,
     ChangeFilterTodolistType,
     ChangeTitleTodolistType,
-    RemoveTodolistType,
+    RemoveTodolistType, todoListId1, todoListId2,
 } from './todolistreducer';
 
 
@@ -35,7 +35,15 @@ type  ChangeTaskStatusType={
  export type ActionType =AddTaskType|RemoveTaskType| ChangeTaskTitleType|ChangeTaskStatusType| AddTodolistType|
     RemoveTodolistType|ChangeTitleTodolistType|ChangeFilterTodolistType
 
-export const taskReducer=(state:TasksType , action: ActionType): TasksType => {
+let initialState:TasksType={
+    [todoListId1]: [{id: v1(), title: 'HTML', isDone: true},
+        {id: v1(), title: 'CSS', isDone: false},
+        {id: v1(), title: 'React', isDone: false}],
+    [todoListId2]: [{id: v1(), title: 'You', isDone: true},
+        {id: v1(), title: 'Cook', isDone: false},
+        {id: v1(), title: 'React', isDone: false}]
+}
+export const taskReducer=(state:TasksType=initialState , action: ActionType): TasksType => {
     switch (action.type) {
         case 'ADD-TASK':{
             let stateCopy={...state};
