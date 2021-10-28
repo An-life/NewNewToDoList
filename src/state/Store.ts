@@ -8,3 +8,6 @@ let rootReducer=combineReducers({
     tasks:taskReducer
 })
 export let store=createStore(rootReducer);
+
+// @ts-ignore
+window.store = store;

@@ -1,6 +1,7 @@
-import {FilterType, TaskType, TodoType} from '../App';
+
 import {v1} from 'uuid';
 import {ActionType} from './task-reducer';
+import {FilterType, TodoType} from '../AppRedux';
 
 
 
@@ -24,11 +25,9 @@ export type  ChangeFilterTodolistType={
     id: string
 }
 
-export let todoListId1 = v1();
-export let todoListId2 = v1();
 
-let initialState:Array<TodoType>=[{id: todoListId1, title: 'What to bye', filter: 'all'},
-    {id: todoListId2, title: 'What to read', filter: 'all'}]
+
+let initialState:Array<TodoType>=[]
 
 export const todolistReducer=(state: Array<TodoType>=initialState, action: ActionType): Array<TodoType> => {
     switch (action.type) {
