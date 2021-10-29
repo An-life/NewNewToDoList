@@ -9,7 +9,8 @@ import {store} from './state/Store';
 
 ReactDOM.render(
     <Provider store={store}>
-    <AppRedux/></Provider>,
+    <AppRedux/>
+    </Provider>,
   document.getElementById('root')
 );
 
