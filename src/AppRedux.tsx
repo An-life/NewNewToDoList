@@ -14,14 +14,17 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppRootType} from './state/Store';
 
 export type FilterType = 'all' | 'active' | 'completed'
+
 export type TodoType = {
     id: string
     title: string
     filter: FilterType
 }
+
 export type TasksType = {
     [key: string]: Array<TaskType>
 }
+
 export type TaskType = {
     id: string
     title: string
@@ -30,32 +33,30 @@ export type TaskType = {
 
 function AppRedux() {
 //state
-   const dispatch=useDispatch();
-   const todolists=useSelector<AppRootType,Array<TodoType>>(state=>state.todolists);
-
-
+    const dispatch = useDispatch();
+    const todolists = useSelector<AppRootType, Array<TodoType>>(state => state.todolists);
 
 //фильтрация тасок
     function changeFilter(value: FilterType, todoListId: string) {
         let action = changeFilterTodolistAC(value, todoListId);
         dispatch(action);
     }
+
     //удаление тудулиста
     function removeTodoList(todoListId: string) {
         let action = removeTodolistAC(todoListId);
         dispatch(action);
     }
-
+    //изменение название тудулиста
     function changeTodoListTitle(id: string, title: string) {
         let action = changeTitleTodolistAC(id, title);
         dispatch(action);
     }
-
+    //дабавление тудулиста
     function addTodoList(title: string) {
         let action = addTodolistAC(title);
         dispatch(action);
     }
-
 
     return (
         <div className="App">
