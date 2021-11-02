@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {AddItemForTodoList} from './AddItemForTodoList';
 import {EditableSpan} from './EditableSpan';
 import {Button, Checkbox, IconButton} from '@material-ui/core';
@@ -27,12 +27,12 @@ export const ToDoList =React.memo( (props: PropsType) => {
     const dispatch = useDispatch();
     const tasks = useSelector<AppRootType, Array<TaskType>>(state => state.tasks[props.id]);
 
-    let removeTodoList = () => {
+    let removeTodoList =useCallback( () => {
         props.removeTodoList(props.id);
-    }
-    let changeToDoListTitle = (title: string) => {
+    },[])
+    let changeToDoListTitle =useCallback( (title: string) => {
         props.changeTodoListTitle(title, props.id);
-    }
+    },[])
     let tasksForToDoList = tasks;
     if (props.filter === 'active') {
         tasksForToDoList = tasksForToDoList.filter(t => t.isDone === false);
