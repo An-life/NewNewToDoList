@@ -1,5 +1,4 @@
 import {v1} from 'uuid';
-import {FilterType, TodoType} from '../App';
 import {
     addTodolistAC,
     changeFilterTodolistAC,
@@ -7,6 +6,7 @@ import {
     removeTodolistAC,
     todolistReducer
 } from './todolistreducer';
+import {FilterType, TodoType} from '../AppRedux';
 
 test('new todolist should be add',()=>{
      let todolistId1=v1();

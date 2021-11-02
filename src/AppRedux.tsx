@@ -40,23 +40,24 @@ function AppRedux() {
     let changeFilter=useCallback((value: FilterType, todoListId: string) =>{
         let action = changeFilterTodolistAC(value, todoListId);
         dispatch(action);
-    },[])
+    },[dispatch])
 
     //удаление тудулиста
     let removeTodoList=useCallback((todoListId: string)=> {
         let action = removeTodolistAC(todoListId);
         dispatch(action);
-    },[])
+    },[dispatch])
     //изменение название тудулиста
     let  changeTodoListTitle=useCallback((id: string, title: string)=> {
         let action = changeTitleTodolistAC(id, title);
         dispatch(action);
-    },[])
+    },[dispatch])
     //дабавление тудулиста
     let addTodoList=useCallback((title: string)=> {
+        console.log('addTodoList')
         let action = addTodolistAC(title);
         dispatch(action);
-    },[])
+    },[dispatch])
 
     return (
         <div className="App">
