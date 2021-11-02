@@ -12,7 +12,9 @@ export function AddItemForTodoList(props: AddItemForTodoListPropsType) {
     let [error, setError] = useState<string | null>(null);
     //обработчик события
     let onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null);
+        if (error!==null){
+            setError(null);
+        }
         setTitle(e.currentTarget.value)
     };
     //обработчик события
