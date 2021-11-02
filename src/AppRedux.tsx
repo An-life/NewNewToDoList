@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {ToDoList} from './ToDoList';
 import {AddItemForTodoList} from './AddItemForTodoList';
@@ -37,26 +37,26 @@ function AppRedux() {
     const todolists = useSelector<AppRootType, Array<TodoType>>(state => state.todolists);
 
 //фильтрация тасок
-    function changeFilter(value: FilterType, todoListId: string) {
+    let changeFilter=useCallback((value: FilterType, todoListId: string) =>{
         let action = changeFilterTodolistAC(value, todoListId);
         dispatch(action);
-    }
+    },[])
 
     //удаление тудулиста
-    function removeTodoList(todoListId: string) {
+    let removeTodoList=useCallback((todoListId: string)=> {
         let action = removeTodolistAC(todoListId);
         dispatch(action);
-    }
+    },[])
     //изменение название тудулиста
-    function changeTodoListTitle(id: string, title: string) {
+    let  changeTodoListTitle=useCallback((id: string, title: string)=> {
         let action = changeTitleTodolistAC(id, title);
         dispatch(action);
-    }
+    },[])
     //дабавление тудулиста
-    function addTodoList(title: string) {
+    let addTodoList=useCallback((title: string)=> {
         let action = addTodolistAC(title);
         dispatch(action);
-    }
+    },[])
 
     return (
         <div className="App">
