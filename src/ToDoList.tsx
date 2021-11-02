@@ -23,7 +23,7 @@ export type TaskType = {
     isDone: boolean
 }
 
-export const ToDoList = (props: PropsType) => {
+export const ToDoList =React.memo( (props: PropsType) => {
     const dispatch = useDispatch();
     const tasks = useSelector<AppRootType, Array<TaskType>>(state => state.tasks[props.id]);
 
@@ -78,5 +78,5 @@ export const ToDoList = (props: PropsType) => {
             }}>Completed</Button>
         </div>
     )
-}
+})
 
