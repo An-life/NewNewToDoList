@@ -29,10 +29,11 @@ export const ToDoList =React.memo( (props: PropsType) => {
 
     let removeTodoList =useCallback( () => {
         props.removeTodoList(props.id);
-    },[])
+    },[ props.removeTodoList,props.id])
     let changeToDoListTitle =useCallback( (title: string) => {
         props.changeTodoListTitle(title, props.id);
-    },[])
+    },[ props.changeTodoListTitle, props.id])
+
     let tasksForToDoList = tasks;
     if (props.filter === 'active') {
         tasksForToDoList = tasksForToDoList.filter(t => t.isDone === false);

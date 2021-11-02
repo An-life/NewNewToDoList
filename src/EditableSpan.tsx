@@ -11,20 +11,19 @@ export let EditableSpan =React.memo( (props: EditableSpanType) => {
     let [editMode, setEditMode] = useState(false);
     let [title, setTitle] = useState(props.title);
 
-    let activateEditMode =useCallback( () => {
+    let activateEditMode =() => {
         setEditMode(true);
         setTitle(props.title)
-    },[])
+    }
 
-    let activateViewMode =useCallback( () => {
+    let activateViewMode =() => {
         setEditMode(false);
         props.onChange(title);
-    },[])
+    }
 
-    let onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value),[])
+    let onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
 
     return editMode ?
         <TextField variant={'outlined'} value={title} onChange={onChangeHandler} onBlur={activateViewMode} autoFocus/> :
         <span onDoubleClick={activateEditMode}>{title}</span>
-
 })

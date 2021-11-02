@@ -51,7 +51,7 @@ export const taskReducer=(state:TasksType=initialState , action: ActionType): Ta
         case 'REMOVE-TASK':{
             let stateCopy={...state};
             let tasks = stateCopy[action.todolistId];
-            let filterTask=tasks.filter(t=>t.id!=action.taskId)
+            let filterTask=tasks.filter(t=>t.id!==action.taskId)
             stateCopy[action.todolistId] =filterTask ;
             return stateCopy}
         case 'CHANGE-TASK-TITLE':{
@@ -59,7 +59,8 @@ export const taskReducer=(state:TasksType=initialState , action: ActionType): Ta
             let task=stateCopy[action.todolistId].find(t=>t.id===action.taskId)
             if(task){
                 task.title=action.title
-            }return stateCopy
+            }
+            return stateCopy
         }
         case 'CHANGE-TASK-STATUS':{
             let stateCopy={...state};
