@@ -6,7 +6,7 @@ type AddItemForTodoListPropsType = {
     addItem: (title: string) => void
 }
 
-export function AddItemForTodoList(props: AddItemForTodoListPropsType) {
+export const AddItemForTodoList=React.memo((props: AddItemForTodoListPropsType)=> {
     //state
     let [title, setTitle] = useState('');
     let [error, setError] = useState<string | null>(null);
@@ -42,4 +42,4 @@ export function AddItemForTodoList(props: AddItemForTodoListPropsType) {
                    helperText={error}/>
         <IconButton color={'primary'} onClick={addTask}><AddBox/></IconButton>
     </div>
-}
+})
