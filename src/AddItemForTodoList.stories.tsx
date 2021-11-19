@@ -2,9 +2,6 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import {AddItemForTodoList} from './AddItemForTodoList';
 import {action} from '@storybook/addon-actions';
-
-
-
 export default {
     title: 'TodoList/AddItemForTodoList',
     component:AddItemForTodoList ,
