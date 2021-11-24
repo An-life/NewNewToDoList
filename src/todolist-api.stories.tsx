@@ -5,7 +5,8 @@ export default {
     title: 'API'
 }
 const settings = {
-    withCredentials: true
+    withCredentials: true,
+    headers:{ 'API-KEY':'5aecab3c-05b6-41db-afbc-a453341bf70f'}
 }
 
 export const GetTodolists = () => {
@@ -25,6 +26,12 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
+        axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists', {title: "newTodolist"}, settings)
+            .then( (res) => {
+        setState(res.data);
+    } )
+
+
     }, [])
 
     return <div> {JSON.stringify(state)}</div>
