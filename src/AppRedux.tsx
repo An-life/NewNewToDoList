@@ -7,34 +7,24 @@ import {Menu} from '@material-ui/icons';
 import {
     addTodolistAC,
     changeFilterTodolistAC,
-    changeTitleTodolistAC,
-    removeTodolistAC
+    changeTitleTodolistAC, FilterType,
+    removeTodolistAC, TodoListDomainType
 } from './state/todolistreducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootType} from './state/Store';
+import {TaskType} from './API/todoList-api';
 
-export type FilterType = 'all' | 'active' | 'completed'
 
-export type TodoType = {
-    id: string
-    title: string
-    filter: FilterType
-}
 
-export type TasksType = {
+export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 
 function AppRedux() {
 //state
     const dispatch = useDispatch();
-    const todolists = useSelector<AppRootType, Array<TodoType>>(state => state.todolists);
+    const todolists = useSelector<AppRootType, Array<TodoListDomainType>>(state => state.todolists);
 
 //фильтрация тасок
     let changeFilter=useCallback((value: FilterType, todoListId: string) =>{

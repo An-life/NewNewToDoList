@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios';
 import {todoListApi} from './API/todoList-api';
 
 export default {
@@ -58,7 +57,7 @@ export const UpdateTodolistTitle = () => {
 export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
     const [todoListId, setTodoListId] = useState<string>('')
-     const getTask=() => {
+    const getTask = () => {
         let todoListId = ''
         todoListApi.getTasks(todoListId)
             .then((res) => {
@@ -104,8 +103,8 @@ export const UpdateTask = () => {
     const [state, setState] = useState<any>(null)
     const [taskTitle, setTaskTitle] = useState<string>('')
     const [taskDescription, setTaskDescription] = useState<string>('')
-    const [status,setStatus]=useState<number>(0)
-    const [priority,setPriority]=useState<number>(0)
+    const [status, setStatus] = useState<number>(0)
+    const [priority, setPriority] = useState<number>(0)
     const [startDate, setStartDate] = useState<string>('')
     const [deadLine, setDeadLine] = useState<string>('')
     const [todoListId, setTodoListId] = useState<string>('')

@@ -5,8 +5,9 @@ import {Button, Checkbox, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootType} from './state/Store';
-import {FilterType} from './AppRedux';
 import {addTaskAC, changeTaskStatusAC, changeTaskTitletAC, removeTaskAC} from './state/task-reducer';
+import {TaskStatuses, TaskType} from './API/todoList-api';
+import {FilterType} from './state/todolistreducer';
 
 type PropsType = {
     id: string
@@ -17,29 +18,24 @@ type PropsType = {
     changeTodoListTitle: (title: string, id: string) => void
 }
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 
-export const ToDoList =React.memo( (props: PropsType) => {
+export const ToDoList = React.memo((props: PropsType) => {
     const dispatch = useDispatch();
     const tasks = useSelector<AppRootType, Array<TaskType>>(state => state.tasks[props.id]);
 
-    let removeTodoList =useCallback( () => {
+    let removeTodoList = useCallback(() => {
         props.removeTodoList(props.id);
-    },[ props.removeTodoList,props.id])
-    let changeToDoListTitle =useCallback( (title: string) => {
+    }, [props.removeTodoList, props.id])
+    let changeToDoListTitle = useCallback((title: string) => {
         props.changeTodoListTitle(title, props.id);
-    },[ props.changeTodoListTitle, props.id])
+    }, [props.changeTodoListTitle, props.id])
 
     let tasksForToDoList = tasks;
     if (props.filter === 'active') {
-        tasksForToDoList = tasksForToDoList.filter(t => t.isDone === false);
+        tasksForToDoList = tasksForToDoList.filter(t => t.status === TaskStatuses.New);
     }
     if (props.filter === 'completed') {
-        tasksForToDoList = tasksForToDoList.filter(t => t.isDone === true);
+        tasksForToDoList = tasksForToDoList.filter(t => t.status === TaskStatuses.Completed);
     }
 
     return (
@@ -55,12 +51,13 @@ export const ToDoList =React.memo( (props: PropsType) => {
                         let onChangeTitleHandler = (title: string) => {
                             dispatch(changeTaskTitletAC(t.id, title, props.id))
                         }
-                        return <div className={t.isDone ? 'is-Done' : ''} key={t.id}><Checkbox onChange={(e) => {
-                            let newStatus = e.currentTarget.checked;
-                            dispatch(changeTaskStatusAC(newStatus, t.id, props.id))
-                        }}
-                                                                                               color={'primary'}
-                                                                                               checked={t.isDone}/>
+                        return <div className={t.status === TaskStatuses.Completed ? 'is-Done' : ''} key={t.id}>
+                            <Checkbox onChange={(e) => {
+                                let newStatus = e.currentTarget.checked;
+                                dispatch(changeTaskStatusAC(newStatus ? TaskStatuses.Completed : TaskStatuses.New, t.id, props.id))
+                            }}
+                                      color={'primary'}
+                                      checked={t.status === TaskStatuses.Completed}/>
                             <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
                             <IconButton onClick={() => {
                                 dispatch(removeTaskAC(t.id, props.id))
