@@ -77,7 +77,12 @@ export const todoListApi = {
         return promise;
     },
     updateTask(todoListId:string,taskId: string,model:UpdateTaskType){
-
+        const promise = instance.put<ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
+        return promise;
+    },
+    createTask(todoListId:string, taskTitle:string){
+        const promise = instance.post<ResponseType<TaskType>>(`todo-lists/${todoListId}/tasks`,{title:taskTitle})
+        return promise;
     }
 
 }
