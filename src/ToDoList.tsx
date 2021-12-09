@@ -1,13 +1,13 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {AddItemForTodoList} from './AddItemForTodoList';
 import {EditableSpan} from './EditableSpan';
 import {Button, Checkbox, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootType} from './state/Store';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitletAC, removeTaskAC} from './state/task-reducer';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitletAC, fetchTasksTC, removeTaskAC} from './state/task-reducer';
 import {TaskStatuses, TaskType} from './API/todoList-api';
-import {FilterType} from './state/todolistreducer';
+import {fetchTodoListsTC, FilterType} from './state/todolistreducer';
 
 type PropsType = {
     id: string
@@ -18,18 +18,19 @@ type PropsType = {
     changeTodoListTitle: (title: string, id: string) => void
 }
 
-
 export const ToDoList = React.memo((props: PropsType) => {
     const dispatch = useDispatch();
-    const tasks = useSelector<AppRootType, Array<TaskType>>(state => state.tasks[props.id]);
 
+    useEffect(()=>{
+        dispatch(fetchTasksTC(props.id))
+    },[])
+    const tasks = useSelector<AppRootType, Array<TaskType>>(state => state.tasks[props.id]);
     let removeTodoList = useCallback(() => {
         props.removeTodoList(props.id);
     }, [props.removeTodoList, props.id])
     let changeToDoListTitle = useCallback((title: string) => {
         props.changeTodoListTitle(title, props.id);
     }, [props.changeTodoListTitle, props.id])
-
     let tasksForToDoList = tasks;
     if (props.filter === 'active') {
         tasksForToDoList = tasksForToDoList.filter(t => t.status === TaskStatuses.New);

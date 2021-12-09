@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {ToDoList} from './ToDoList';
 import {AddItemForTodoList} from './AddItemForTodoList';
@@ -7,47 +7,48 @@ import {Menu} from '@material-ui/icons';
 import {
     addTodolistAC,
     changeFilterTodolistAC,
-    changeTitleTodolistAC, FilterType,
+    changeTitleTodolistAC, fetchTodoListsTC, FilterType,
     removeTodolistAC, TodoListDomainType
 } from './state/todolistreducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootType} from './state/Store';
 import {TaskType} from './API/todoList-api';
 
-
-
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
-
 function AppRedux() {
 //state
     const dispatch = useDispatch();
-    const todolists = useSelector<AppRootType, Array<TodoListDomainType>>(state => state.todolists);
+    const todoLists = useSelector<AppRootType, Array<TodoListDomainType>>(state => state.todolists);
 
+    useEffect(() => {
+        dispatch(fetchTodoListsTC())
+           },[]
+    )
 //фильтрация тасок
-    let changeFilter=useCallback((value: FilterType, todoListId: string) =>{
+    let changeFilter = useCallback((value: FilterType, todoListId: string) => {
         let action = changeFilterTodolistAC(value, todoListId);
         dispatch(action);
-    },[dispatch])
-
+    }, [dispatch])
     //удаление тудулиста
-    let removeTodoList=useCallback((todoListId: string)=> {
+    let removeTodoList = useCallback((todoListId: string) => {
+
         let action = removeTodolistAC(todoListId);
         dispatch(action);
-    },[dispatch])
+    }, [dispatch])
     //изменение название тудулиста
-    let  changeTodoListTitle=useCallback((id: string, title: string)=> {
+    let changeTodoListTitle = useCallback((id: string, title: string) => {
         let action = changeTitleTodolistAC(id, title);
         dispatch(action);
-    },[dispatch])
+    }, [dispatch])
     //дабавление тудулиста
-    let addTodoList=useCallback((title: string)=> {
+    let addTodoList = useCallback((title: string) => {
         console.log('addTodoList')
         let action = addTodolistAC(title);
         dispatch(action);
-    },[dispatch])
+    }, [dispatch])
 
     return (
         <div className="App">
@@ -67,7 +68,7 @@ function AppRedux() {
                     <AddItemForTodoList addItem={addTodoList}/>
                 </Grid>
                 <Grid container spacing={3}>
-                    {todolists.map(tl => {
+                    {todoLists.map(tl => {
                         return <Grid item>
                             <Paper style={{padding: '10px'}}>
                                 <ToDoList
