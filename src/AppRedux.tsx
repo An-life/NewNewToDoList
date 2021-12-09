@@ -5,10 +5,10 @@ import {AddItemForTodoList} from './AddItemForTodoList';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 import {
-    addTodolistAC,
+     addTodoListsTC,
     changeFilterTodolistAC,
-    changeTitleTodolistAC, fetchTodoListsTC, FilterType,
-    removeTodolistAC, TodoListDomainType
+     changeTodoListTitleTC, fetchTodoListsTC, FilterType,
+    removeTodoListsTC, TodoListDomainType
 } from './state/todolistreducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootType} from './state/Store';
@@ -34,20 +34,15 @@ function AppRedux() {
     }, [dispatch])
     //удаление тудулиста
     let removeTodoList = useCallback((todoListId: string) => {
-
-        let action = removeTodolistAC(todoListId);
-        dispatch(action);
+        dispatch( removeTodoListsTC(todoListId));
     }, [dispatch])
     //изменение название тудулиста
     let changeTodoListTitle = useCallback((id: string, title: string) => {
-        let action = changeTitleTodolistAC(id, title);
-        dispatch(action);
+        dispatch(changeTodoListTitleTC(title, id));
     }, [dispatch])
     //дабавление тудулиста
     let addTodoList = useCallback((title: string) => {
-        console.log('addTodoList')
-        let action = addTodolistAC(title);
-        dispatch(action);
+        dispatch(addTodoListsTC(title));
     }, [dispatch])
 
     return (
