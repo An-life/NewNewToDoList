@@ -1,20 +1,17 @@
 import axios from 'axios';
 
-
 export type TodoListType = {
     id: string
     title: string
     addedDate: string
     order: number
 }
-
 export enum TaskStatuses{
     New=0,
     InProgress=1,
     Completed=2,
     Draft=3
 }
-
 export enum TodoTaskPriorities{
     Low=0,
     Middle=1,
@@ -22,7 +19,6 @@ export enum TodoTaskPriorities{
     Urgently=3,
     Later=4
 }
-
 type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
@@ -41,11 +37,10 @@ export type TaskType = {
     order: number
     addedDate: string
 }
-
 type GetTaskResponseType = {
     error: string | null
     totalCount: number
-    items: TaskType
+    items: TaskType[]
 }
 type UpdateTaskType = {
     title: string
@@ -55,7 +50,6 @@ type UpdateTaskType = {
     priority: number
     startDate: string
     deadline: string
-
 }
 
 const instance = axios.create({
