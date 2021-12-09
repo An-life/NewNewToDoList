@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 export type TodoListType = {
     id: string
@@ -42,14 +42,14 @@ type GetTaskResponseType = {
     totalCount: number
     items: TaskType[]
 }
-type UpdateTaskType = {
-    title: string
-    description: string
-    completed: boolean
-    status: number
-    priority: number
-    startDate: string
-    deadline: string
+export type UpdateTaskType = {
+    title?: string
+    description?: string
+    completed?: boolean
+    status?: number
+    priority?: TodoTaskPriorities
+    startDate?: string
+    deadline?: string
 }
 
 const instance = axios.create({
@@ -89,8 +89,12 @@ export const todoListApi = {
         const promise = instance.put<ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
         return promise;
     },
-    createTask(todoListId:string, taskTitle:string){
-        const promise = instance.post<ResponseType<TaskType>>(`todo-lists/${todoListId}/tasks`,{title:taskTitle})
+    // createTask(title: string, todolistId: string) {
+    //     return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks`, {title})
+    // },
+    createTask(title:string, todoListId:string ){
+        debugger
+        const promise = instance.post<{title:string},AxiosResponse<ResponseType<{item:TaskType}>>>(`todo-lists/${todoListId}/tasks`,{title})
         return promise;
     }
 

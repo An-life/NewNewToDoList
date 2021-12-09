@@ -1,7 +1,6 @@
 import {Button, IconButton, TextField} from '@material-ui/core';
 import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
 import {AddBox} from '@material-ui/icons';
-import {addTodolistAC} from './state/todolistreducer';
 
 type AddItemForTodoListPropsType = {
     addItem: (title: string) => void
@@ -28,7 +27,7 @@ export const AddItemForTodoList=React.memo((props: AddItemForTodoListPropsType)=
     // callback добавления таски
     let addTask =useCallback( () => {
         if (title.trim() !== '') {
-            props.addItem(title.trim());
+            props.addItem(title);
             console.log(title)
             setTitle('')
         } else {
