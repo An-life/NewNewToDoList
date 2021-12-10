@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import {todoListApi} from './API/todoList-api';
+import {todoListApi} from './todoList-api';
 
 export default {
     title: 'API'
 }
-
 
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
