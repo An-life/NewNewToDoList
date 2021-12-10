@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {ToDoList} from './ToDoList';
-import {AddItemForTodoList} from './AddItemForTodoList';
+import {ToDoList} from '../features/TodoLists/ToDoList';
+import {AddItemForTodoList} from '../Components/AddItemForm/AddItemForTodoList';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 import {
@@ -9,10 +9,10 @@ import {
     changeFilterTodolistAC,
      changeTodoListTitleTC, fetchTodoListsTC, FilterType,
     removeTodoListsTC, TodoListDomainType
-} from './state/todolistreducer';
+} from '../state/todolistreducer';
 import {useDispatch, useSelector} from 'react-redux';
-import {AppRootType} from './state/Store';
-import {TaskType} from './API/todoList-api';
+import {AppRootType} from '../state/Store';
+import {TaskType} from '../API/todoList-api';
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -82,3 +82,4 @@ function AppRedux() {
 }
 
 export default AppRedux;
+

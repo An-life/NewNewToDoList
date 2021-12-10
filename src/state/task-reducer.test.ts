@@ -1,7 +1,7 @@
 import {addTaskAC, removeTaskAC, setTasksAC, taskReducer, updateTaskAC} from './task-reducer';
 import {addTodolistAC, removeTodolistAC, setTodoListAC} from './todolistreducer';
 import {TaskStatuses, TodoTaskPriorities} from '../API/todoList-api';
-import {TasksStateType} from '../AppRedux';
+import {TasksStateType} from '../App/AppRedux';
 
 
 test('correct task should be added to correct array', () => {
