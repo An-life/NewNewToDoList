@@ -9,6 +9,7 @@ import {TaskStatuses, TaskType, todoListApi, UpdateTaskType} from '../API/todoLi
 import {TasksStateType} from '../App/AppRedux';
 import {Dispatch} from 'redux';
 import {AppRootType} from './Store';
+import {setErrorAC, setStatusAC} from './appReducer';
 
 let initialState: TasksStateType = {}
 
@@ -123,4 +124,5 @@ export const changeTaskTC = (taskId: string, domainModel: UpdateTaskType, todoli
 export type ActionType = ReturnType<typeof addTaskAC> | ReturnType<typeof removeTaskAC> |
     ReturnType<typeof updateTaskAC> | ReturnType<typeof addTodolistAC> |
     ReturnType<typeof removeTodolistAC> | ReturnType<typeof changeTitleTodolistAC> |
-    ReturnType<typeof changeFilterTodolistAC> | ReturnType<typeof setTodoListAC> | ReturnType<typeof setTasksAC>
+    ReturnType<typeof changeFilterTodolistAC> | ReturnType<typeof setTodoListAC> | ReturnType<typeof setTasksAC>|
+    ReturnType<typeof setErrorAC>|ReturnType<typeof setStatusAC>

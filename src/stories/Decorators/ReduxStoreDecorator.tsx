@@ -5,11 +5,13 @@ import {v1} from 'uuid';
 import {todolistReducer} from '../../state/todolistreducer';
 import {taskReducer} from '../../state/task-reducer';
 import {TaskStatuses, TodoTaskPriorities} from '../../API/todoList-api';
+import {appReducer} from '../../state/appReducer';
 
 export type AppRootType=ReturnType<typeof rootReducer>
 let rootReducer=combineReducers({
     todolists:todolistReducer,
-    tasks:taskReducer
+    tasks:taskReducer,
+    app:appReducer
 })
 
 const initialGlobalState:AppRootType={
@@ -59,6 +61,10 @@ const initialGlobalState:AppRootType={
                 order: 0,
                 addedDate: ''}
         ]
+    },
+    app:{
+        error:null,
+        status:'idle'
     }
 }
 
