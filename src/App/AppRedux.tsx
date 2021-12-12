@@ -2,7 +2,17 @@ import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {ToDoList} from '../features/TodoLists/ToDoList';
 import {AddItemForTodoList} from '../Components/AddItemForm/AddItemForTodoList';
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
+import {
+    AppBar,
+    Button,
+    Container,
+    Grid,
+    IconButton,
+    LinearProgress,
+    Paper,
+    Toolbar,
+    Typography
+} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 import {
      addTodoListsTC,
@@ -57,6 +67,7 @@ function AppRedux() {
                     </Typography>
                     <Button color={'inherit'}>Login</Button>
                 </Toolbar>
+                <LinearProgress />
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>

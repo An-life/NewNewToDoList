@@ -10,7 +10,10 @@ import {
 test('new todolist should be add', () => {
     let todolistId1 = v1();
     let todolistId2 = v1();
-    let newTitle = 'New todo'
+    let newTitleTodo = {id: 'todolistId3',
+        title: 'New todolist',
+        addedDate: '',
+        order: 0}
     const startState: Array<TodoListDomainType> = [
         {
             id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '',
@@ -21,10 +24,10 @@ test('new todolist should be add', () => {
             order: 0
         }
     ]
-    const endState = todolistReducer(startState, addTodolistAC(newTitle))
+    const endState = todolistReducer(startState, addTodolistAC(newTitleTodo))
 
     expect(endState.length).toBe(3);
-    expect(endState[0].title).toBe(newTitle);
+    expect(endState[0].title).toBe(newTitleTodo.title);
     expect(endState[0].filter).toBe('all')
 })
 

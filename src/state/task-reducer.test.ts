@@ -229,7 +229,7 @@ test('status of specified task should be changed', () => {
             }
         ]
     };
-    const action = (TaskStatuses.New, '2', 'todolistId2');
+    const action = updateTaskAC('2',{status:TaskStatuses.New} , 'todolistId2');
     const endState = taskReducer(startState, action)
 
     expect(endState['todolistId2'][1].status).toBeFalsy();
@@ -303,7 +303,7 @@ test('title of specified task should be changed', () => {
             }
         ]
     };
-    const action = updateTaskAC('Fuck', '2', 'todolistId2');
+    const action = updateTaskAC('2',{title:'Fuck'} , 'todolistId2');
     const endState = taskReducer(startState, action)
 
     expect(endState['todolistId2'][1].title).toBe('Fuck');
@@ -529,8 +529,7 @@ test('tasks should be added for todolist', () => {
             'todolistId1': []
         }, action
     )
-
-    expect(endState['todolistId1']).toBe(3);
-    expect(endState['todolistId2']).toBe(0);
+    expect(endState['todolistId1'].length).toBe(3);
+    expect(endState['todolistId2'].length).toBe(0);
 })
 
