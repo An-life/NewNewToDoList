@@ -1,11 +1,12 @@
-import {v1} from 'uuid';
+
 import {
     addTodolistAC,
     changeFilterTodolistAC,
     changeTitleTodolistAC, FilterType,
     removeTodolistAC, setTodoListAC, TodoListDomainType,
     todolistReducer
-} from './todolistreducer';
+} from './todolist-reducer';
+import {v1} from "uuid";
 
 test('new todolist should be add', () => {
     let todolistId1 = v1();

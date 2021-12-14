@@ -1,29 +1,20 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {ToDoList} from '../features/TodoLists/ToDoList';
-import {AddItemForTodoList} from '../Components/AddItemForm/AddItemForTodoList';
-import {
-    AppBar,
-    Button,
-    Container,
-    Grid,
-    IconButton,
-    LinearProgress,
-    Paper,
-    Toolbar,
-    Typography
-} from '@material-ui/core';
-import {Menu} from '@material-ui/icons';
+import {AddItemForTodoList} from '../Components/AddItemForm/AddItemForTodoList'
 import {
      addTodoListsTC,
     changeFilterTodolistAC,
      changeTodoListTitleTC, fetchTodoListsTC, FilterType,
     removeTodoListsTC, TodoListDomainType
-} from '../state/todolistreducer';
+} from '../state/todolist-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootType} from '../state/Store';
 import {TaskType} from '../API/todoList-api';
 import  {ErrorSnackbars} from '../Components/ErrorSnakBar/ErrorSnackBar';
+import {AppBar, Button, Container, Grid, IconButton, LinearProgress, Paper, Typography, Toolbar} from "@mui/material";
+import {Menu} from "@mui/icons-material";
+import {RequestStatusType} from "../state/appReducer";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -33,6 +24,7 @@ function AppRedux() {
 //state
     const dispatch = useDispatch();
     const todoLists = useSelector<AppRootType, Array<TodoListDomainType>>(state => state.todolists);
+    const status=useSelector<AppRootType,RequestStatusType>(state => state.app.status);
 
     useEffect(() => {
         dispatch(fetchTodoListsTC())
@@ -59,8 +51,10 @@ function AppRedux() {
     return (
         <div className="App">
             <ErrorSnackbars/>
+
             <AppBar position={'static'}>
                 <Toolbar>
+
                     <IconButton edge={'start'} color={'inherit'} area-label={'menu'}>
                         <Menu/>
                     </IconButton>
@@ -69,7 +63,7 @@ function AppRedux() {
                     </Typography>
                     <Button color={'inherit'}>Login</Button>
                 </Toolbar>
-                <LinearProgress />
+                {status==='loading'&&<LinearProgress />}
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>

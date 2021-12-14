@@ -3,14 +3,14 @@ import {ActionType} from './task-reducer';
 
 
 
-
+export type RequestStatusType='idle'|'loading'|'succeeded'|'failed'
  export type InitialStateType={
-    status:'idle'|'loading'|'succeeded'|'failed',
+    status:RequestStatusType,
     error:string|null
 }
 const initialState:InitialStateType={
     status:'idle',
-    error:'someError'
+    error:null
 }
 
 export const appReducer=(state:InitialStateType=initialState,action:ActionType):InitialStateType=>{
