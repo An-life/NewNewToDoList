@@ -3,8 +3,9 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, {AlertProps} from '@mui/material/Alert';
 import {AppRootType} from '../../state/Store';
 import {useDispatch, useSelector} from 'react-redux';
-import {setErrorAC} from '../../state/appReducer';
+import {setAppErrorAC} from '../../state/appReducer';
 
+//component
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref,
@@ -12,6 +13,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+//component
 export function ErrorSnackbars() {
     // const [open, setOpen] = React.useState(false);
     const error = useSelector<AppRootType, string | null>(state => state.app.error)
@@ -20,7 +22,7 @@ export function ErrorSnackbars() {
         if (reason === 'clickaway') {
             return;
         }
-        dispatch(setErrorAC(null))
+        dispatch(setAppErrorAC(null))
         // setOpen(false);
     };
 

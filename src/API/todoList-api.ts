@@ -16,7 +16,7 @@ export const todoListApi = {
         return promise;
     },
     createTodolist(title: string) {
-        const promise = instance.post<ResponseType<{ item: TodoListType }>>('todo-lists', {title: title})
+        const promise = instance.post<{title: string}, ResponseType<{ item: TodoListType }>>('todo-lists', {title: title})
         return promise;
     },
     deleteTodoList(id: string) {
@@ -24,7 +24,7 @@ export const todoListApi = {
         return promise;
     },
     updateTodoList(id: string, title: string) {
-        const promise = instance.put<ResponseType>(`todo-lists/${id}`, {title: title})
+        const promise = instance.put<{title: string}, AxiosResponse<ResponseType>>(`todo-lists/${id}`, {title: title})
         return promise;
     },
     getTasks(todoListId: string) {
@@ -36,7 +36,7 @@ export const todoListApi = {
         return promise;
     },
     updateTask(todoListId:string,taskId: string,model:UpdateTaskType){
-        const promise = instance.put<ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
+        const promise = instance.put<UpdateTaskType,ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
         return promise;
     },
     // createTask(title: string, todolistId: string) {

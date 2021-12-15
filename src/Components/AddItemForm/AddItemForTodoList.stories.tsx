@@ -12,6 +12,10 @@ const callback = action(`Button 'add' was pressed inside the form`);
 export const AddItemFormBaseExample: ComponentStory<typeof AddItemForTodoList> = () =>{
     return <AddItemForTodoList  addItem={callback} />} ;
 
+export const AddItemFormDisabledExample: ComponentStory<typeof AddItemForTodoList> = () =>{
+    return <AddItemForTodoList  disabled={true} addItem={callback} />} ;
+
+
 
 
 

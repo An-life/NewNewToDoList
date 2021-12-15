@@ -8,21 +8,19 @@ import {TaskStatuses, TaskType} from '../../API/todoList-api';
 import {FilterType} from '../../state/todolist-reducer';
 import {Delete} from "@mui/icons-material";
 import {Button, Checkbox, IconButton} from "@mui/material";
+import {RequestStatusType} from "../../state/appReducer";
 
-type PropsType = {
-    id: string
-    title: string
-    changeFilter: (value: FilterType, todoListId: string) => void
-    filter: FilterType
-    removeTodoList: (todoListId: string) => void
-    changeTodoListTitle: (title: string, id: string) => void
-}
+//component
+export const ToDoList = React.memo(({demo=false,...props}: PropsType) => {
+    if(typeof demo==='undefined') demo=false;
 
-export const ToDoList = React.memo((props: PropsType) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchTasksTC(props.id))
+        if(!demo){ dispatch(fetchTasksTC(props.id))
+        }else {
+            return
+        }
     }, [])
 
     const tasks = useSelector<AppRootType, Array<TaskType>>(state => state.tasks[props.id]);
@@ -39,18 +37,17 @@ export const ToDoList = React.memo((props: PropsType) => {
     if (props.filter === 'completed') {
         tasksForToDoList = tasksForToDoList.filter(t => t.status === TaskStatuses.Completed);
     }
-   /* const removeTask = useCallback( (id)=>dispatch(deleteTaskTC(props.id, id)),
-     [])*/
+    /* const removeTask = useCallback( (id)=>dispatch(deleteTaskTC(props.id, id)),
+      [])*/
     const addTask = useCallback(function (title: string) {
         dispatch(addTaskTC(title, props.id))
     }, [])
-
 
     return (
         <div>
             <div><EditableSpan title={props.title} onChange={changeToDoListTitle}/> <IconButton
                 onClick={removeTodoList}><Delete/></IconButton></div>
-            <AddItemForTodoList addItem={addTask}/>
+            <AddItemForTodoList addItem={addTask} disabled={props.entityStatus==='loading'}/>
             <div>
                 {
                     tasksForToDoList.map(t => {
@@ -60,12 +57,15 @@ export const ToDoList = React.memo((props: PropsType) => {
                         return <div className={t.status === TaskStatuses.Completed ? 'is-Done' : ''} key={t.id}>
                             <Checkbox onChange={(e) => {
                                 let newStatus = e.currentTarget.checked;
-                                dispatch(changeTaskTC(t.id, {status: newStatus ? TaskStatuses.Completed : TaskStatuses.New}, props.id))
+                                dispatch(changeTaskTC(t.id, {status: newStatus ? TaskStatuses.Completed :
+                                        TaskStatuses.New}, props.id))
                             }}
                                       color={'primary'}
                                       checked={t.status === TaskStatuses.Completed}/>
                             <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
-                            <IconButton onClick={()=>{dispatch(deleteTaskTC(props.id, t.id))}}><Delete/></IconButton></div>
+                            <IconButton onClick={() => {
+                                dispatch(deleteTaskTC(props.id, t.id))
+                            }} disabled={props.entityStatus==='loading'}><Delete/></IconButton></div>
                     })
                 }
             </div>
@@ -81,4 +81,17 @@ export const ToDoList = React.memo((props: PropsType) => {
         </div>
     )
 })
+
+//types
+type PropsType = {
+    id: string
+    title: string
+    changeFilter: (value: FilterType, todoListId: string) => void
+    filter: FilterType
+    removeTodoList: (todoListId: string) => void
+    changeTodoListTitle: (title: string, id: string) => void
+    demo?:boolean
+    entityStatus: RequestStatusType
+}
+
 

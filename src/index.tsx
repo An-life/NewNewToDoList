@@ -9,9 +9,9 @@ import {store} from './state/Store';
 
 ReactDOM.render(
     <Provider store={store}>
-    <AppRedux/>
+        <AppRedux/>
     </Provider>,
-  document.getElementById('root')
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

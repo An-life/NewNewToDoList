@@ -1,14 +1,9 @@
-
 import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
 import {IconButton, TextField} from "@mui/material";
 import {AddBox} from "@mui/icons-material";
 
-
-type AddItemForTodoListPropsType = {
-    addItem: (title: string) => void
-}
-
-export const AddItemForTodoList=React.memo((props: AddItemForTodoListPropsType)=> {
+//component
+export const AddItemForTodoList=React.memo(({addItem,disabled=false}: AddItemForTodoListPropsType)=> {
     //state
     let [title, setTitle] = useState('');
     let [error, setError] = useState<string | null>(null);
@@ -29,7 +24,7 @@ export const AddItemForTodoList=React.memo((props: AddItemForTodoListPropsType)=
     // callback добавления таски
     let addTask =useCallback( () => {
         if (title.trim() !== '') {
-            props.addItem(title);
+            addItem(title);
             console.log(title)
             setTitle('')
         } else {
@@ -44,6 +39,12 @@ export const AddItemForTodoList=React.memo((props: AddItemForTodoListPropsType)=
                    onKeyPress={onKeyPressHandler}
                    label={'Title'}
                    helperText={error}/>
-        <IconButton color={'primary'} onClick={addTask}><AddBox/></IconButton>
+        <IconButton color={'primary'} onClick={addTask} disabled={disabled}><AddBox/></IconButton>
     </div>
 })
+
+//types
+type AddItemForTodoListPropsType = {
+    addItem: (title: string) => void
+    disabled?:boolean
+}

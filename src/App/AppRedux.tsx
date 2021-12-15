@@ -16,11 +16,8 @@ import {AppBar, Button, Container, Grid, IconButton, LinearProgress, Paper, Typo
 import {Menu} from "@mui/icons-material";
 import {RequestStatusType} from "../state/appReducer";
 
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
-
-function AppRedux() {
+//component
+function AppRedux({demo=false}:PropsType) {
 //state
     const dispatch = useDispatch();
     const todoLists = useSelector<AppRootType, Array<TodoListDomainType>>(state => state.todolists);
@@ -81,6 +78,8 @@ function AppRedux() {
                                     filter={tl.filter}
                                     removeTodoList={removeTodoList}
                                     changeTodoListTitle={changeTodoListTitle}
+                                    demo={demo}
+                                    entityStatus={tl.entityStatus}
                                 /></Paper>
                         </Grid>
                     })}</Grid>
@@ -89,4 +88,13 @@ function AppRedux() {
 }
 
 export default AppRedux;
+
+//types
+export type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
+type PropsType={
+    demo?:boolean
+}
+
 

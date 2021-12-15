@@ -71,14 +71,16 @@ test('correct task should be added to correct array', () => {
             }
         ]
     };
-    const action = addTaskAC({id: 'exist', title: 'tea', status: TaskStatuses.New, description: '',
+    const action = addTaskAC({
+        id: 'exist', title: 'tea', status: TaskStatuses.New, description: '',
         completed: false,
         priority: TodoTaskPriorities.Low,
         startDate: '',
         deadline: '',
         todoListId: 'todolistId2',
         order: 0,
-        addedDate: ''});
+        addedDate: ''
+    });
     const endState = taskReducer(startState, action)
 
     expect(endState['todolistId1'].length).toBe(3);
@@ -229,7 +231,7 @@ test('status of specified task should be changed', () => {
             }
         ]
     };
-    const action = updateTaskAC('2',{status:TaskStatuses.New} , 'todolistId2');
+    const action = updateTaskAC('2', {status: TaskStatuses.New}, 'todolistId2');
     const endState = taskReducer(startState, action)
 
     expect(endState['todolistId2'][1].status).toBeFalsy();
@@ -303,7 +305,7 @@ test('title of specified task should be changed', () => {
             }
         ]
     };
-    const action = updateTaskAC('2',{title:'Fuck'} , 'todolistId2');
+    const action = updateTaskAC('2', {title: 'Fuck'}, 'todolistId2');
     const endState = taskReducer(startState, action)
 
     expect(endState['todolistId2'][1].title).toBe('Fuck');
@@ -378,10 +380,10 @@ test('new array should be added', () => {
         ]
     };
     const action = addTodolistAC({
-        id:'sdsfdf',
-        title:'fgdfg',
-        order:0,
-        addedDate:''
+        id: 'sdsfdf',
+        title: 'fgdfg',
+        order: 0,
+        addedDate: ''
     });
     const endState = taskReducer(startState, action)
     const keys = Object.keys(endState);
