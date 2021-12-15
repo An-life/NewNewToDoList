@@ -8,6 +8,7 @@ let initialState: Array<TodoListDomainType> = []
 export const todolistReducer = (state: Array<TodoListDomainType> = initialState, action: ActionType): Array<TodoListDomainType> => {
     switch (action.type) {
         case 'ADD-TODOLIST':
+            console.log(action.todoList)
             return [{...action.todoList, filter: 'all', entityStatus: 'idle'}, ...state]
         case 'REMOVE-TODOLIST':
             return state.filter(t => t.id !== action.id);
@@ -25,8 +26,7 @@ export const todolistReducer = (state: Array<TodoListDomainType> = initialState,
 }
 
 //actionCreators
-export const addTodolistAC = (todoList: TodoListType) =>
-    ({type: 'ADD-TODOLIST', todoList}) as const
+export const addTodolistAC = (todoList: TodoListType) => ({type: 'ADD-TODOLIST', todoList}) as const
 export const removeTodolistAC = (id: string) =>
     ({type: 'REMOVE-TODOLIST', id}) as const
 export const changeTitleTodolistAC = (title: string, id: string) =>
@@ -61,7 +61,8 @@ export const addTodoListsTC = (title: string) => (dispatch: Dispatch<ActionType>
     dispatch(setAppStatusAC('loading'))
     todoListApi.createTodolist(title)
         .then(res => {
-            dispatch(addTodolistAC(res.data.item))
+            console.log('res', res)
+            dispatch(addTodolistAC(res.data.data.item))
             dispatch(setAppStatusAC('succeeded'))
         })
 }

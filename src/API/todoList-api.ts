@@ -16,7 +16,7 @@ export const todoListApi = {
         return promise;
     },
     createTodolist(title: string) {
-        const promise = instance.post<{title: string}, ResponseType<{ item: TodoListType }>>('todo-lists', {title: title})
+        const promise = instance.post<{title: string}, ResponseType<{ data: {item: TodoListType } }>>('todo-lists', {title: title})
         return promise;
     },
     deleteTodoList(id: string) {
@@ -36,14 +36,13 @@ export const todoListApi = {
         return promise;
     },
     updateTask(todoListId:string,taskId: string,model:UpdateTaskType){
-        const promise = instance.put<UpdateTaskType,ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
+        const promise = instance.put<UpdateTaskType, AxiosResponse<ResponseType>>(`todo-lists/${todoListId}/tasks/${taskId}`, model)
         return promise;
     },
     // createTask(title: string, todolistId: string) {
     //     return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks`, {title})
     // },
     createTask(title:string, todoListId:string ){
-        debugger
         const promise = instance.post<{title:string},AxiosResponse<ResponseType<{item:TaskType}>>>(`todo-lists/${todoListId}/tasks`,{title})
         return promise;
     }
@@ -69,7 +68,7 @@ export enum TodoTaskPriorities{
     Urgently=3,
     Later=4
 }
-type ResponseType<D = {}> = {
+export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
     data: D

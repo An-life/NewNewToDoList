@@ -9,7 +9,8 @@ import {TaskStatuses, TaskType, todoListApi, UpdateTaskType} from '../API/todoLi
 import {TasksStateType} from '../App/AppRedux';
 import {Dispatch} from 'redux';
 import {AppRootType} from './Store';
-import {setAppErrorAC, setAppStatusAC} from './appReducer';
+import {handleNetworkAppError, handleServerAppError} from "../utils/error-utils";
+import {setAppErrorAC, setAppStatusAC} from "./appReducer";
 
 let initialState: TasksStateType = {}
 
@@ -97,17 +98,15 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
         .then(res => {
             if (res.data.resultCode === 0) {
                 const task = res.data.data.item
-                const action = addTaskAC(task)
+               const action = addTaskAC(task)
                 dispatch(action)
                 dispatch(setAppStatusAC('succeeded'))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setAppErrorAC('some error'))
-                }
-                dispatch(setAppStatusAC('failed'))
+               handleServerAppError(res.data.messages, dispatch)
             }
+        })
+        .catch((error) => {
+           handleNetworkAppError(error, dispatch)
         })
 }
 export const changeTaskTC = (taskId: string, domainModel: UpdateTaskType, todolistId: string) =>
@@ -131,13 +130,34 @@ export const changeTaskTC = (taskId: string, domainModel: UpdateTaskType, todoli
         }
         todoListApi.updateTask(todolistId, taskId, apiModel)
             .then(res => {
-                dispatch(updateTaskAC(taskId, domainModel, todolistId))
+                console.log('res', res)
+                if (res.data.resultCode === 0) {
+                    dispatch(updateTaskAC(taskId, domainModel, todolistId))
+                } else {
+                    handleServerAppError(res.data.messages, dispatch)
+                }
+            })
+            .catch((error) => {
+                handleNetworkAppError(error, dispatch)
             })
     }
 
 //types
-export type ActionType = ReturnType<typeof addTaskAC> | ReturnType<typeof removeTaskAC> |
-    ReturnType<typeof updateTaskAC> | ReturnType<typeof addTodolistAC> |
-    ReturnType<typeof removeTodolistAC> | ReturnType<typeof changeTitleTodolistAC> |
-    ReturnType<typeof changeFilterTodolistAC> | ReturnType<typeof setTodoListAC> | ReturnType<typeof setTasksAC> |
-    ReturnType<typeof setAppErrorAC> | ReturnType<typeof setAppStatusAC>|ReturnType<typeof changeTodoListEntityStatusAC>
+export type ActionType =
+    ReturnType<typeof addTaskAC>
+    | ReturnType<typeof removeTaskAC>
+    |
+    ReturnType<typeof updateTaskAC>
+    | ReturnType<typeof addTodolistAC>
+    |
+    ReturnType<typeof removeTodolistAC>
+    | ReturnType<typeof changeTitleTodolistAC>
+    |
+    ReturnType<typeof changeFilterTodolistAC>
+    | ReturnType<typeof setTodoListAC>
+    | ReturnType<typeof setTasksAC>
+    |
+    ReturnType<typeof setAppErrorAC>
+    | ReturnType<typeof setAppStatusAC>
+    | ReturnType<typeof changeTodoListEntityStatusAC>
+
