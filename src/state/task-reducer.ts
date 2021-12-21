@@ -98,15 +98,15 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
         .then(res => {
             if (res.data.resultCode === 0) {
                 const task = res.data.data.item
-               const action = addTaskAC(task)
+                const action = addTaskAC(task)
                 dispatch(action)
                 dispatch(setAppStatusAC('succeeded'))
             } else {
-               handleServerAppError(res.data.messages, dispatch)
+                handleServerAppError(res.data.messages, dispatch)
             }
         })
         .catch((error) => {
-           handleNetworkAppError(error, dispatch)
+            handleNetworkAppError(error, dispatch)
         })
 }
 export const changeTaskTC = (taskId: string, domainModel: UpdateTaskType, todolistId: string) =>
