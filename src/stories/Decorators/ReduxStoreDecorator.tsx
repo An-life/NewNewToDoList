@@ -7,12 +7,13 @@ import {taskReducer} from '../../state/task-reducer';
 import {TaskStatuses, TodoTaskPriorities} from '../../API/todoList-api';
 import {appReducer} from '../../state/appReducer';
 import thunkMiddleware from "redux-thunk";
+import {authReducer} from "../../state/auth-reducer";
 
-export type AppRootType = ReturnType<typeof rootReducer>
 let rootReducer = combineReducers({
     todolists: todolistReducer,
     tasks: taskReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer
 })
 
 const initialGlobalState: AppRootType = {
@@ -77,12 +78,18 @@ const initialGlobalState: AppRootType = {
     },
     app: {
         error: null,
-        status: 'idle'
+        status: 'idle',
+        initialized: false
+    },
+    auth: {
+        isLoginIn: false
     }
 }
-
 
 export const StorybookStore = createStore(rootReducer, initialGlobalState, applyMiddleware(thunkMiddleware));
 export const ReduxStoreDecorator = (storyFn: any) => {
     return <Provider store={StorybookStore}>{storyFn()}</Provider>
 }
+
+//types
+export type AppRootType = ReturnType<typeof rootReducer>

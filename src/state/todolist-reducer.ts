@@ -2,6 +2,7 @@ import {ActionType} from './task-reducer';
 import {todoListApi, TodoListType} from '../API/todoList-api';
 import {Dispatch} from 'redux';
 import {RequestStatusType, setAppStatusAC} from "./appReducer";
+import {handleNetworkAppError} from "../utils/error-utils";
 
 let initialState: Array<TodoListDomainType> = []
 
@@ -19,7 +20,7 @@ export const todolistReducer = (state: Array<TodoListDomainType> = initialState,
         case 'SET-TODOLIST':
             return action.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}));
         case "GANGE-ENTITYSTATUS":
-            return state.map(tl=>tl.id===action.id?{...tl,entityStatus:action.status}:tl)
+            return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.status} : tl)
         default:
             return state;
     }
@@ -35,8 +36,8 @@ export const changeFilterTodolistAC = (filter: FilterType, id: string) =>
     ({type: 'CHANGE-TODOLIST-FILTER', filter, id}) as const
 export const setTodoListAC = (todoLists: Array<TodoListType>) =>
     ({type: 'SET-TODOLIST', todoLists}) as const
-export const changeTodoListEntityStatusAC = (id: string, status:RequestStatusType) =>
-    ({type: 'GANGE-ENTITYSTATUS', id,status}) as const
+export const changeTodoListEntityStatusAC = (id: string, status: RequestStatusType) =>
+    ({type: 'GANGE-ENTITYSTATUS', id, status}) as const
 
 
 //thunkCreators
@@ -46,6 +47,9 @@ export const fetchTodoListsTC = () => (dispatch: Dispatch<ActionType>) => {
         .then(res => {
             dispatch(setTodoListAC(res.data))
             dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch(error => {
+            handleNetworkAppError(error, dispatch)
         })
 }
 export const removeTodoListsTC = (todoListId: string) => (dispatch: Dispatch<ActionType>) => {

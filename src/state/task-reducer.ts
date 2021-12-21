@@ -10,7 +10,8 @@ import {TasksStateType} from '../App/AppRedux';
 import {Dispatch} from 'redux';
 import {AppRootType} from './Store';
 import {handleNetworkAppError, handleServerAppError} from "../utils/error-utils";
-import {setAppErrorAC, setAppStatusAC} from "./appReducer";
+import {setAppErrorAC, setAppInitializedAC, setAppStatusAC} from "./appReducer";
+import {setiIsLoginInAC} from "./auth-reducer";
 
 let initialState: TasksStateType = {}
 
@@ -130,7 +131,6 @@ export const changeTaskTC = (taskId: string, domainModel: UpdateTaskType, todoli
         }
         todoListApi.updateTask(todolistId, taskId, apiModel)
             .then(res => {
-                console.log('res', res)
                 if (res.data.resultCode === 0) {
                     dispatch(updateTaskAC(taskId, domainModel, todolistId))
                 } else {
@@ -159,5 +159,7 @@ export type ActionType =
     |
     ReturnType<typeof setAppErrorAC>
     | ReturnType<typeof setAppStatusAC>
-    | ReturnType<typeof changeTodoListEntityStatusAC>
+    | ReturnType<typeof changeTodoListEntityStatusAC> |
+    ReturnType<typeof setiIsLoginInAC> |
+    ReturnType<typeof setAppInitializedAC>
 

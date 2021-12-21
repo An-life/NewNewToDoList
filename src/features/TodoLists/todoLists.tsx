@@ -1,4 +1,4 @@
-import {Container, Grid, Paper} from "@mui/material";
+import {Grid, Paper} from "@mui/material";
 import {AddItemForTodoList} from "../../Components/AddItemForm/AddItemForTodoList";
 import {ToDoList} from "./ToDoList";
 import {useCallback} from "react";
@@ -12,7 +12,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootType} from "../../state/Store";
 
-export let ToDoLists = (props:PropsType) => {
+export let ToDoLists = (props: PropsType) => {
     const dispatch = useDispatch();
     const todoLists = useSelector<AppRootType, Array<TodoListDomainType>>(state => state.todolists);
 
@@ -33,6 +33,7 @@ export let ToDoLists = (props:PropsType) => {
     let changeTodoListTitle = useCallback((id: string, title: string) => {
         dispatch(changeTodoListTitleTC(title, id));
     }, [dispatch])
+
 
     return (<div>
             <Grid container style={{padding: '20px'}}>

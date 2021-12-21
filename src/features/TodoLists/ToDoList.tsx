@@ -9,16 +9,19 @@ import {FilterType} from '../../state/todolist-reducer';
 import {Delete} from "@mui/icons-material";
 import {Button, Checkbox, IconButton} from "@mui/material";
 import {RequestStatusType} from "../../state/appReducer";
+import {Link} from "react-router-dom";
 
 //component
-export const ToDoList = React.memo(({demo=false,...props}: PropsType) => {
-    if(typeof demo==='undefined') demo=false;
-
+export const ToDoList = React.memo(({demo = false, ...props}: PropsType) => {
+    if (typeof demo === 'undefined') demo = false;
+    const isLoggedIn = useSelector<AppRootType, boolean>(state => state.auth.isLoginIn)
     const dispatch = useDispatch();
 
+
     useEffect(() => {
-        if(!demo){ dispatch(fetchTasksTC(props.id))
-        }else {
+        if (demo || !isLoggedIn) {
+            dispatch(fetchTasksTC(props.id))
+        } else {
             return
         }
     }, [])
@@ -43,11 +46,15 @@ export const ToDoList = React.memo(({demo=false,...props}: PropsType) => {
         dispatch(addTaskTC(title, props.id))
     }, [])
 
+    if (!isLoggedIn) {
+        return <Link to={'/login'}/>
+    }
+
     return (
         <div>
             <div><EditableSpan title={props.title} onChange={changeToDoListTitle}/> <IconButton
                 onClick={removeTodoList}><Delete/></IconButton></div>
-            <AddItemForTodoList addItem={addTask} disabled={props.entityStatus==='loading'}/>
+            <AddItemForTodoList addItem={addTask} disabled={props.entityStatus === 'loading'}/>
             <div>
                 {
                     tasksForToDoList.map(t => {
@@ -57,15 +64,17 @@ export const ToDoList = React.memo(({demo=false,...props}: PropsType) => {
                         return <div className={t.status === TaskStatuses.Completed ? 'is-Done' : ''} key={t.id}>
                             <Checkbox onChange={(e) => {
                                 let newStatus = e.currentTarget.checked;
-                                dispatch(changeTaskTC(t.id, {status: newStatus ? TaskStatuses.Completed :
-                                        TaskStatuses.New}, props.id))
+                                dispatch(changeTaskTC(t.id, {
+                                    status: newStatus ? TaskStatuses.Completed :
+                                        TaskStatuses.New
+                                }, props.id))
                             }}
                                       color={'primary'}
                                       checked={t.status === TaskStatuses.Completed}/>
                             <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
                             <IconButton onClick={() => {
                                 dispatch(deleteTaskTC(props.id, t.id))
-                            }} disabled={props.entityStatus==='loading'}><Delete/></IconButton></div>
+                            }} disabled={props.entityStatus === 'loading'}><Delete/></IconButton></div>
                     })
                 }
             </div>
@@ -90,7 +99,7 @@ type PropsType = {
     filter: FilterType
     removeTodoList: (todoListId: string) => void
     changeTodoListTitle: (title: string, id: string) => void
-    demo?:boolean
+    demo?: boolean
     entityStatus: RequestStatusType
 }
 

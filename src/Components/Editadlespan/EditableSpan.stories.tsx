@@ -1,13 +1,11 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import {ComponentStory, ComponentMeta} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
 import {EditableSpan} from './EditableSpan';
 
-
-
 export default {
     title: 'TodoList/EditableSpan',
-    component:EditableSpan ,
+    component: EditableSpan,
 } as ComponentMeta<typeof EditableSpan>;
 
 const changeCallback = action(`Value changed`);

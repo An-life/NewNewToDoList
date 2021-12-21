@@ -8,17 +8,26 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
+import {useDispatch, useSelector} from "react-redux";
+import {loginTC} from "../../state/auth-reducer";
+import {AppRootType} from "../../state/Store";
+import {Link} from "react-router-dom";
 
 export const Login = () => {
-
+    let dispatch = useDispatch()
+    const isLoginIn = useSelector<AppRootType, boolean>(state => state.auth.isLoginIn)
     const formik = useFormik({
         validate: (values) => {
-           if(!values.email) {return {
-                email: 'Email is required'
-            }}
-            if(!values.password) {return {
-                password: 'Password is required'
-            }}
+            if (!values.email) {
+                return {
+                    email: 'Email is required'
+                }
+            }
+            if (!values.password) {
+                return {
+                    password: 'Password is required'
+                }
+            }
 
         },
         initialValues: {
@@ -27,9 +36,13 @@ export const Login = () => {
             rememberMe: false,
         },
         onSubmit: values => {
-            alert(JSON.stringify(values))
+            dispatch(loginTC(values))
+
         },
     });
+    if (isLoginIn) {
+        return <Link to={'/'}/>
+    }
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>

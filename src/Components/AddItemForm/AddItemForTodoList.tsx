@@ -3,14 +3,14 @@ import {IconButton, TextField} from "@mui/material";
 import {AddBox} from "@mui/icons-material";
 
 //component
-export const AddItemForTodoList=React.memo(({addItem,disabled=false}: AddItemForTodoListPropsType)=> {
+export const AddItemForTodoList = React.memo(({addItem, disabled = false}: AddItemForTodoListPropsType) => {
     //state
     let [title, setTitle] = useState('');
     let [error, setError] = useState<string | null>(null);
     //обработчик события
 
     let onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        if (error!== null){
+        if (error !== null) {
             setError(null)
         }
         setTitle(e.currentTarget.value)
@@ -22,7 +22,7 @@ export const AddItemForTodoList=React.memo(({addItem,disabled=false}: AddItemFor
         }
     }
     // callback добавления таски
-    let addTask =useCallback( () => {
+    let addTask = useCallback(() => {
         if (title.trim() !== '') {
             addItem(title);
             console.log(title)
@@ -30,7 +30,7 @@ export const AddItemForTodoList=React.memo(({addItem,disabled=false}: AddItemFor
         } else {
             setError('No title');
         }
-    },[title])
+    }, [title])
 
     return <div>
         <TextField variant={'outlined'}
@@ -46,5 +46,5 @@ export const AddItemForTodoList=React.memo(({addItem,disabled=false}: AddItemFor
 //types
 type AddItemForTodoListPropsType = {
     addItem: (title: string) => void
-    disabled?:boolean
+    disabled?: boolean
 }

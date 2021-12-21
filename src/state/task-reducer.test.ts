@@ -3,7 +3,6 @@ import {addTodolistAC, removeTodolistAC, setTodoListAC} from './todolist-reducer
 import {TaskStatuses, TodoTaskPriorities} from '../API/todoList-api';
 import {TasksStateType} from '../App/AppRedux';
 
-
 test('correct task should be added to correct array', () => {
     const startState: any = {
         'todolistId1': [
