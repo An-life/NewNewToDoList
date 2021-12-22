@@ -9,7 +9,7 @@ import {FilterType} from '../../state/todolist-reducer';
 import {Delete} from "@mui/icons-material";
 import {Button, Checkbox, IconButton} from "@mui/material";
 import {RequestStatusType} from "../../state/appReducer";
-import {Link} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 //component
 export const ToDoList = React.memo(({demo = false, ...props}: PropsType) => {
@@ -20,10 +20,8 @@ export const ToDoList = React.memo(({demo = false, ...props}: PropsType) => {
 
     useEffect(() => {
         if (demo || !isLoggedIn) {
-            dispatch(fetchTasksTC(props.id))
-        } else {
             return
-        }
+        } dispatch(fetchTasksTC(props.id))
     }, [])
 
     const tasks = useSelector<AppRootType, Array<TaskType>>(state => state.tasks[props.id]);
@@ -47,7 +45,7 @@ export const ToDoList = React.memo(({demo = false, ...props}: PropsType) => {
     }, [])
 
     if (!isLoggedIn) {
-        return <Link to={'/login'}/>
+        return <Navigate to={'/login'}/>
     }
 
     return (

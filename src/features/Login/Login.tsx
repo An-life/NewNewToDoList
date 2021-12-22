@@ -11,7 +11,9 @@ import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../state/auth-reducer";
 import {AppRootType} from "../../state/Store";
-import {Link} from "react-router-dom";
+import { Navigate } from 'react-router-dom';
+
+
 
 export const Login = () => {
     let dispatch = useDispatch()
@@ -41,7 +43,7 @@ export const Login = () => {
         },
     });
     if (isLoginIn) {
-        return <Link to={'/'}/>
+        return <Navigate to={'/'} />
     }
 
     return <Grid container justifyContent={'center'}>

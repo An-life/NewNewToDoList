@@ -19,7 +19,7 @@ export const todolistReducer = (state: Array<TodoListDomainType> = initialState,
             return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
         case 'SET-TODOLIST':
             return action.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}));
-        case "GANGE-ENTITYSTATUS":
+        case "CHANGE-ENTITYSTATUS":
             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.status} : tl)
         default:
             return state;
@@ -37,7 +37,7 @@ export const changeFilterTodolistAC = (filter: FilterType, id: string) =>
 export const setTodoListAC = (todoLists: Array<TodoListType>) =>
     ({type: 'SET-TODOLIST', todoLists}) as const
 export const changeTodoListEntityStatusAC = (id: string, status: RequestStatusType) =>
-    ({type: 'GANGE-ENTITYSTATUS', id, status}) as const
+    ({type: 'CHANGE-ENTITYSTATUS', id, status}) as const
 
 
 //thunkCreators

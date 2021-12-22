@@ -1,10 +1,10 @@
 import {Grid, Paper} from "@mui/material";
 import {AddItemForTodoList} from "../../Components/AddItemForm/AddItemForTodoList";
 import {ToDoList} from "./ToDoList";
-import {useCallback} from "react";
+import {useCallback, useEffect} from "react";
 import {
     addTodoListsTC,
-    changeFilterTodolistAC, changeTodoListTitleTC,
+    changeFilterTodolistAC, changeTodoListTitleTC, fetchTodoListsTC,
     FilterType,
     removeTodoListsTC,
     TodoListDomainType
@@ -15,6 +15,14 @@ import {AppRootType} from "../../state/Store";
 export let ToDoLists = (props: PropsType) => {
     const dispatch = useDispatch();
     const todoLists = useSelector<AppRootType, Array<TodoListDomainType>>(state => state.todolists);
+
+    useEffect(()=>{
+        if(props.demo){
+            return
+        }
+        dispatch(fetchTodoListsTC())
+    },[])
+
 
     //дабавление тудулиста
     let addTodoList = useCallback((title: string) => {

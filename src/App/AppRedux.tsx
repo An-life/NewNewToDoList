@@ -30,15 +30,16 @@ function AppRedux({demo = false}: PropsType) {
     const isInitialized = useSelector<AppRootType, boolean>(state => state.app.initialized);
     const isLoggedIn = useSelector<AppRootType, boolean>(state => state.auth.isLoginIn)
     useEffect(() => {
-            dispatch(fetchTodoListsTC());
             dispatch(initializedAppTC());
+
+
         }, []
     )
     let logoutHandler = useCallback(() => {
         dispatch(logoutTC())
     }, [])
     if (!isInitialized) {
-        return <div style={{position: 'fixed', top: '30%', textAlign: 'center'}}><CircularProgress/></div>
+        return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width:"100%"}}><CircularProgress/></div>
     }
 
     return (
