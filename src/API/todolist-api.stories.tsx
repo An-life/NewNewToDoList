@@ -12,7 +12,6 @@ export const GetTodolists = () => {
             .then((res) => {
                 setState(res.data)
             })
-
     }, [])
 
     return <div> {JSON.stringify(state)}</div>

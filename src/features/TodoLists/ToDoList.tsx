@@ -18,11 +18,11 @@ export const ToDoList = React.memo(({demo = false, ...props}: PropsType) => {
     const dispatch = useDispatch();
 
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (demo || !isLoggedIn) {
             return
         } dispatch(fetchTasksTC(props.id))
-    }, [])
+    }, [])*/
 
     const tasks = useSelector<AppRootType, Array<TaskType>>(state => state.tasks[props.id]);
     let removeTodoList = useCallback(() => {

@@ -47,6 +47,10 @@ export const fetchTodoListsTC = () => (dispatch: Dispatch<ActionType>) => {
         .then(res => {
             dispatch(setTodoListAC(res.data))
             dispatch(setAppStatusAC('succeeded'))
+            return res.data
+        })
+        .then((todoList)=>{
+            
         })
         .catch(error => {
             handleNetworkAppError(error, dispatch)
