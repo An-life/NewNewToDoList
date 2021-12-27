@@ -1,4 +1,4 @@
-import {ActionType} from './task-reducer';
+import {ActionType, fetchTasksTC} from './task-reducer';
 import {todoListApi, TodoListType} from '../API/todoList-api';
 import {Dispatch} from 'redux';
 import {RequestStatusType, setAppStatusAC} from "./appReducer";
@@ -21,6 +21,8 @@ export const todolistReducer = (state: Array<TodoListDomainType> = initialState,
             return action.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}));
         case "CHANGE-ENTITYSTATUS":
             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.status} : tl)
+        case "CLEAR-DATA":
+            return []
         default:
             return state;
     }
@@ -38,10 +40,13 @@ export const setTodoListAC = (todoLists: Array<TodoListType>) =>
     ({type: 'SET-TODOLIST', todoLists}) as const
 export const changeTodoListEntityStatusAC = (id: string, status: RequestStatusType) =>
     ({type: 'CHANGE-ENTITYSTATUS', id, status}) as const
+export const clearToDoDataAC=()=>({type:'CLEAR-DATA'})as const
+
+
 
 
 //thunkCreators
-export const fetchTodoListsTC = () => (dispatch: Dispatch<ActionType>) => {
+export const fetchTodoListsTC = () => (dispatch: any) => {
 
     todoListApi.getTodolist()
         .then(res => {
@@ -50,7 +55,10 @@ export const fetchTodoListsTC = () => (dispatch: Dispatch<ActionType>) => {
             return res.data
         })
         .then((todoList)=>{
-            
+            todoList.forEach((tl)=>{
+                dispatch(fetchTasksTC(tl.id))
+            })
+
         })
         .catch(error => {
             handleNetworkAppError(error, dispatch)

@@ -4,6 +4,7 @@ import {ActionType} from "./task-reducer";
 import {setAppStatusAC} from "./appReducer";
 import {authAPI, LoginParamsType} from "../API/todoList-api";
 import {handleNetworkAppError, handleServerAppError} from "../utils/error-utils";
+import {clearToDoDataAC} from "./todolist-reducer";
 
 const initialState={
 isLoginIn:false
@@ -30,6 +31,7 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionType
             if (res.data.resultCode === 0) {
                 dispatch(setiIsLoginInAC(true))
                 dispatch(setAppStatusAC('succeeded'))
+                dispatch(clearToDoDataAC())
             } else {
                 handleServerAppError(res.data.messages, dispatch)
             }
